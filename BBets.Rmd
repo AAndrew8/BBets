@@ -1,6 +1,7 @@
 ---
-title: "Untitled"
+title: "BBets"
 output: html_document
+autor: Andrew Arredondo
 date: "2024-09-27"
 ---
 
@@ -13,3 +14,33 @@ Find the probability thatat least two student have the same birthday.  If 26 stu
 2. Assume class size is 26 instead of 35.  With the same bet ($1 ot $1) what is the probability Dr. J wins the bet now.  If 20 of the 26 students make the bet, what is Dr. J's expected profit/loss?
 
 3. What size class (how many students) makes the $1 againt $1 a fair bet?
+
+
+
+```{r setup, include=FALSE}
+set.seed(123)  # Set seed for reproducibility
+library(ggplot2)
+```
+
+```{r}
+# Function to simulate the birthday problem
+birthday_simulation <- function(n_people = 35, n_simulations = 100) {
+  count <- 0
+  for (i in 1:n_simulations) {
+    birthdays <- sample(1:365, n_people, replace = TRUE)  # Sample birthdays
+    if (length(unique(birthdays)) < n_people) {
+      count <- count + 1  # Count if there's a duplicate
+    }
+  }
+  return(count / n_simulations)  # Return probability
+}
+
+# Run the simulation
+n_simulations <- 100
+probabilities <- replicate(n_simulations, birthday_simulation())
+
+# Print the probabilities
+probabilities
+
+```
+
