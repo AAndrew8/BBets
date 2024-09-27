@@ -40,7 +40,99 @@ n_simulations <- 100
 probabilities <- replicate(n_simulations, birthday_simulation())
 
 # Print the probabilities
-probabilities
 
 ```
 
+```{r}
+# Plot the histogram of the probabilities
+ggplot(data.frame(probabilities), aes(x = probabilities)) +
+  geom_histogram(binwidth = 0.05, fill = "blue", color = "black", alpha = 0.7) +
+  labs(title = "Histogram of Birthday Problem Probabilities",
+       x = "Probability",
+       y = "Frequency") +
+  theme_minimal()
+
+```
+
+```{r}
+mean_prob <- mean(probabilities)
+cat('mean = ', mean_prob, "\n")
+
+```
+
+```{r}
+conf_interval <- quantile(probabilities, probs = c(0.025, 0.975))
+cat('95% Confidence Interval = [', conf_interval[1], ', ', conf_interval[2], ']', "\n")
+
+```
+
+```{r}
+EV= mean_prob*26-(1-mean_prob)*26
+print(paste("ev-",EV))
+```
+
+
+```{r}
+FAIR=(mean_prob)/(1-mean_prob)
+print(paste("fairbet-",FAIR))
+```
+
+## question 2
+```{r}
+# Function to simulate the birthday problem
+birthday_simulation <- function(n_people = 26, n_simulations = 100) {
+  count <- 0
+  for (i in 1:n_simulations) {
+    birthdays <- sample(1:365, n_people, replace = TRUE)  # Sample birthdays
+    if (length(unique(birthdays)) < n_people) {
+      count <- count + 1  # Count if there's a duplicate
+    }
+  }
+  return(count / n_simulations)  # Return probability
+}
+
+# Run the simulation
+n_simulations <- 100
+probabilities <- replicate(n_simulations, birthday_simulation())
+
+# Print the probabilities
+
+```
+```{r}
+mean_prob <- mean(probabilities)
+cat('mean = ', mean_prob, "\n")
+
+```
+```{r}
+EV= mean_prob*20-(1-mean_prob)*20
+print(paste("ev-",EV))
+```
+
+
+
+
+
+## question 3
+```{r}
+class_size=22
+```
+```{r}
+# Function to simulate the birthday problem
+birthday_simulation <- function(n_people = class_size, n_simulations = 100) {
+  count <- 0
+  for (i in 1:n_simulations) {
+    birthdays <- sample(1:365, n_people, replace = TRUE)  # Sample birthdays
+    if (length(unique(birthdays)) < n_people) {
+      count <- count + 1  # Count if there's a duplicate
+    }
+  }
+  return(count / n_simulations)  # Return probability
+}
+
+# Run the simulation
+n_simulations <- 100
+probabilities <- replicate(n_simulations, birthday_simulation())
+mean_prob=mean(probabilities)
+# Print the probabilities
+print(paste("prob=",mean_prob))
+```
